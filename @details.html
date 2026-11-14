@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel World - Registration</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    background: #f0f8fb;
+    color: #333;
+}
+
+.booking {
+    background: white;
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px #ccc;
+}
+
+h2 {
+    text-align: center;
+    color: #123d57;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #008cba;
+}
+
+.invalid {
+    border: 2px solid red;
+    background: #fff0f0;
+}
+
+.valid {
+    border: 2px solid green;
+}
+
+.error-msg {
+    display: block;
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 25px;
+    background: #123d57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.back {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back a {
+    color: #123d57;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<section class="booking">
+
+    <h2>Travel World - Registration Form</h2>
+
+    <form id="registerForm" novalidate>
+<img src="https://tse4.mm.bing.net/th/id/OIP.7d-csHhvW9fZ5A5xebQg6AHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" height="500px" width="550px
+
+        <label for="fullName>Full Name</label>
+        <input type="text" id="fullName" name="fullName"
+               placeholder="Enter your full name">
+        <span class="error-msg"></span>
+
+        
+        <label for="empId">Employee / Register ID</label>
+        <input type="text" id="empId" name="empId"
+               placeholder="Enter your Register ID">
+        <span class="error-msg"></span>
+
+        
+        <label for="email">Email Address</label>
+        <input type="text" id="email" name="email"
+               placeholder="Enter your email address">
+        <span class="error-msg"></span>
+
+        
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile"
+               placeholder="Enter 10-digit mobile number"
+               maxlength="10">
+        <span class="error-msg"></span>
+
+        
+        <label for="dept">Division</label>
+        <select id="dept" name="dept">
+            <option value="">Select Your Division</option>
+            <option value="CSE">Computer Science and Engineering</option>
+            <option value="IT">Information Technology</option>
+            <option value="ECE">Electronics and Communication</option>
+            <option value="EEE">Electrical and Electronics</option>
+            <option value="MECH">Mechanical Engineering</option>
+            <option value="CIVIL">Civil Engineering</option>
+        </select>
+        <span class="error-msg"></span>
+
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"
+               placeholder="Enter your password">
+        <span class="error-msg"></span>
+
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword"
+               name="confirmPassword"
+               placeholder="Re-enter your password">
+        <span class="error-msg"></span>
+
+
+        <button type="submit" id="submitBtn" disabled>
+            Register
+        </button>
+
+    </form>
+
+    <div class="back">
+        <a href="http://127.0.0.1:5500/micro%20project%20wt/index.html">← Back to Home</a>
+    </div>
+
+</section>
+
+<script>
+
+
+const form = document.getElementById("registerForm");
+const submitBtn = document.getElementById("submitBtn");
+
+const fullName = document.getElementById("fullName");
+const empId = document.getElementById("empId");
+const email = document.getElementById("email");
+const mobile = document.getElementById("mobile");
+const dept = document.getElementById("dept");
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirmPassword");
+
+
+const patterns = {
+    fullName: /^[a-zA-Z\s]{2,50}$/,
+    empId: /^[A-Z0-9]{6,12}$/i,
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    mobile: /^[6-9]\d{9}$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/
+};
+
+
+function validateField(field) {
+
+    const error = field.nextElementSibling;
+    let isValid = false;
+    let message = "";
+
+    switch (field.id) {
+
+        case "fullName":
+            isValid = patterns.fullName.test(field.value.trim());
+            message = "Enter 2-50 alphabets and spaces only.";
+            break;
+
+        case "empId":
+            isValid = patterns.empId.test(field.value.trim());
+            message = "ID must contain 6-12 alphanumeric characters.";
+            break;
+
+        case "email":
+            isValid = patterns.email.test(field.value.trim());
+            message = "Enter a valid email address.";
+            break;
+
+        case "mobile":
+            isValid = patterns.mobile.test(field.value.trim());
+            message = "Enter a valid 10-digit mobile number starting with 6-9.";
+            break;
+
+        case "dept":
+            isValid = field.value !== "";
+            message = "Please select your division.";
+            break;
+
+        case "password":
+            isValid = patterns.password.test(field.value);
+            message = "Password must have 8 characters, uppercase, lowercase, number and symbol (@$!%*?&).";
+            break;
+
+        case "confirmPassword":
+            isValid = field.value !== "" &&
+                      field.value === password.value;
+            message = "Passwords do not match.";
+            break;
+    }
+
+
+    field.classList.toggle("valid", isValid);
+    field.classList.toggle("invalid", !isValid);
+
+
+    error.textContent = isValid ? "" : message;
+
+    return isValid;
+}
+
+
+function checkForm() {
+
+    const fields = [
+        fullName,
+        empId,
+        email,
+        mobile,
+        dept,
+        password,
+        confirmPassword
+    ];
+
+    const allValid = fields.every(field =>
+        validateField(field)
+    );
+
+    submitBtn.disabled = !allValid;
+
+    return allValid;
+}
+
+
+const fields = [
+    fullName,
+    empId,
+    email,
+    mobile,
+    dept,
+    password,
+    confirmPassword
+];
+
+fields.forEach(field => {
+
+    field.addEventListener("blur", function() {
+        validateField(field);
+
+        if (field.id === "password") {
+            validateField(confirmPassword);
+        }
+
+        checkForm();
+    });
+
+
+    field.addEventListener("input", function() {
+        checkForm();
+    });
+
+    field.addEventListener("change", function() {
+        checkForm();
+    });
+});
+
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    if (checkForm()) {
+        alert("Registration Successful!");
+
+        form.reset();
+
+        fields.forEach(field => {
+            field.classList.remove("valid", "invalid");
+            field.nextElementSibling.textContent = "";
+        });
+
+        submitBtn.disabled = true;
+    } else {
+        alert("Please correct all errors before registering.");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

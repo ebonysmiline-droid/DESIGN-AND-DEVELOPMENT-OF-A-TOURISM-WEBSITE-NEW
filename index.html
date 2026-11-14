@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel World - Tourism</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8fb;
+    color: #333;
+}
+
+header {
+    background: #3e8ec0;
+    color: white;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    color: #ffcc66;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+}
+
+nav a:hover {
+    color: #ffcc66;
+}
+
+.hero {
+    background: linear-gradient(
+        rgba(35, 131, 173, 0.5),
+        rgba(0,0,0,0.5)
+    ), url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b");
+
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 130px 20px;
+    color: white;
+}
+
+.hero h2 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+section {
+    padding: 45px 8%;
+}
+
+h2 {
+    text-align: center;
+    color: #3e8ec0;
+    margin-bottom: 30px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px #ccc;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 18px;
+}
+
+.card-content a {
+    color: #008b8b;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.price {
+    color: #008b65;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button {
+    background: #008b8b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+button:hover {
+    background: #123d57;
+}
+
+.mode-button {
+    margin: 5px;
+    padding: 10px 15px;
+}
+
+body.dark-mode {
+    background: black;
+    color: white;
+}
+
+body.dark-mode section h2 {
+    color: white;
+}
+
+body.dark-mode .card,
+body.dark-mode .card-content {
+    background: #222;
+    color: white;
+}
+
+body.dark-mode .card-content h3,
+body.dark-mode .card-content p {
+    color: white;
+}
+
+body.dark-mode .card-content a {
+    color: #66dddd;
+}
+
+body.dark-mode .price {
+    color: #80e0b0;
+}
+
+body.dark-mode .chat-box {
+    background: #222;
+    color: white;
+}
+
+body.dark-mode .chat-messages {
+    background: #222;
+    color: white;
+}
+
+body.dark-mode .bot {
+    background: #444;
+    color: white;
+}
+
+body.dark-mode .chat-input {
+    background: #222;
+    border-top: 1px solid #555;
+}
+
+body.dark-mode .chat-input input {
+    background: #333;
+    color: white;
+    border: 1px solid #777;
+}
+
+body.dark-mode .chat-input input::placeholder {
+    color: #ccc;
+}
+
+footer {
+    background: #123d57;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #008b8b;
+    color: white;
+    padding: 16px;
+    border-radius: 50%;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.chat-box {
+    display: none;
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    width: 320px;
+    height: 430px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #888;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.chat-header {
+    background: #3e8ec0;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-messages {
+    height: 310px;
+    padding: 12px;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 85%;
+    overflow-wrap: break-word;
+}
+
+.bot {
+    background: #e1f2f7;
+    text-align: left;
+}
+
+.user {
+    background: #008b8b;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-input {
+    display: flex;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+    gap: 5px;
+}
+
+.chat-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    margin: 0;
+    padding: 10px;
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .chat-box {
+        width: calc(100% - 30px);
+        right: 15px;
+        bottom: 85px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>TRAVEL WORLD</h1>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="http://127.0.0.1:5500/micro%20project%20wt/@sign%20in%20form%20.html">Sign In</a>
+        <a href="http://127.0.0.1:5500/@details.html">Plan your trip</a>
+        <a href="#destinations">Destinations</a>
+
+        <button class="mode-button" id="modeButton" onclick="darkMode()">
+            Dark Mode
+        </button>
+    </nav>
+</header>
+
+<div class="hero" id="home">
+    <h2>Explore The World With Us</h2>
+
+    <p>Discover beautiful destinations and enjoy
+    unforgettable journeys.</p>
+
+    <button onclick="location.href='#destinations'">
+        Explore Destinations
+    </button>
+</div>
+
+<section id="destinations">
+
+    <h2>Popular Destinations</h2>
+
+    <div class="container">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1593693411515-c20261bcad6e"
+            alt="Ooty">
+
+            <div class="card-content">
+                <a href="http://127.0.0.1:5500/micro%20project%20wt/@ooty.html">OOTY</a>
+                <p>Visit beautiful hills, gardens and lakes.</p>
+                <p class="price">Starting from ₹6,000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944"
+            alt="Munnar">
+
+            <div class="card-content">
+                <a href="http://127.0.0.1:5500/micro%20project%20wt/@MUNNAR.html">MUNNAR</a>
+                <p>Explore tea gardens and mountains.</p>
+                <p class="price">Starting from ₹7,000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2"
+            alt="Goa">
+
+            <div class="card-content">
+                <a href="http://127.0.0.1:5500/micro%20project%20wt/@MUNNAR.html">GOA</a>
+                <p>Enjoy beaches and beautiful sunsets.</p>
+                <p class="price">Starting from ₹9,000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://wallpaperaccess.com/full/8246759.jpg"
+            alt="Coorg">
+
+            <div class="card-content">
+                <a href="http://127.0.0.1:5500/micro%20project%20wt/@COORG.html">COORG</a>
+                <p>Enjoy waterfalls and coffee plantations.</p>
+                <p class="price">Starting from ₹6,500</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section>
+
+    <h2>Tourist Attractions</h2>
+
+    <div class="container">
+
+        <div class="card-content">
+            <h3>Ooty</h3>
+            <p>• Ooty Lake</p>
+            <p>• Botanical Garden</p>
+            <p>• Doddabetta Peak</p>
+        </div>
+
+        <div class="card-content">
+            <h3>Munnar</h3>
+            <p>• Eravikulam National Park</p>
+            <p>• Mattupetty Dam</p>
+            <p>• Tea Museum</p>
+        </div>
+
+        <div class="card-content">
+            <h3>Goa</h3>
+            <p>• Baga Beach</p>
+            <p>• Fort Aguada</p>
+            <p>• Calangute Beach</p>
+        </div>
+
+        <div class="card-content">
+            <h3>Coorg</h3>
+            <p>• Abbey Falls</p>
+            <p>• Raja's Seat</p>
+            <p>• Dubare Elephant Camp</p>
+        </div>
+
+    </div>
+</section>
+
+<section id="hotels">
+
+    <h2>Choose Your Accommodation</h2>
+
+    <div class="container">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+            alt="Luxury Hotel">
+
+            <div class="card-content">
+                <h3>Luxury Hotel</h3>
+                <p>Premium rooms and excellent facilities.</p>
+                <p class="price">₹4,000 / Night</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32"
+            alt="Standard Hotel">
+
+            <div class="card-content">
+                <h3>Standard Hotel</h3>
+                <p>Comfortable rooms for families.</p>
+                <p class="price">₹2,500 / Night</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427"
+            alt="Budget Hotel">
+
+            <div class="card-content">
+                <h3>Budget Hotel</h3>
+                <p>Affordable accommodation.</p>
+                <p class="price">₹1,500 / Night</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <h3>TRAVEL WORLD</h3>
+    <p>Your Journey, Our Responsibility.</p>
+    <p>Contact: travelworld@example.com</p>
+    <p>© 2026 Travel World. All Rights Reserved.</p>
+</footer>
+
+<button class="chat-button" onclick="toggleChat()">
+    💬chat with me
+</button>
+
+<div class="chat-box" id="chatBox">
+
+    <div class="chat-header">
+        <span>Travel World Chat</span>
+
+        <span onclick="toggleChat()" style="cursor:pointer;">
+            ✖
+        </span>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+
+        <div class="message bot">
+            Hello! Welcome to Travel World.
+            How can I help you?
+        </div>
+
+    </div>
+
+    <div class="chat-input">
+
+        <input type="text"
+        id="userInput"
+        placeholder="Type your message..."
+        onkeydown="if(event.key==='Enter') sendMessage()">
+
+        <button onclick="sendMessage()">Send</button>
+
+    </div>
+
+</div>
+
+<script>
+
+
+function darkMode() {
+
+    document.body.classList.toggle("dark-mode");
+
+    let button = document.getElementById("modeButton");
+
+    if (document.body.classList.contains("dark-mode")) {
+        button.textContent = "Light Mode";
+    } else {
+        button.textContent = "Dark Mode";
+    }
+
+}
+
+
+function toggleChat() {
+
+    let chat = document.getElementById("chatBox");
+
+    if (chat.style.display === "block") {
+        chat.style.display = "none";
+    } else {
+        chat.style.display = "block";
+        document.getElementById("userInput").focus();
+    }
+
+}
+
+
+function sendMessage() {
+
+    let input = document.getElementById("userInput");
+
+    let message = input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+    let chatMessages = document.getElementById("chatMessages");
+
+    let userMessage = document.createElement("div");
+
+    userMessage.className = "message user";
+
+    userMessage.textContent = message;
+
+    chatMessages.appendChild(userMessage);
+
+    let reply = "";
+
+    let text = message.toLowerCase();
+
+    if (text.includes("hello") || text.includes("hi")) {
+
+        reply = "Hello! Welcome to Travel World. How can I help you?";
+
+    }
+
+    else if (text.includes("ooty")) {
+
+        reply = "Ooty is a beautiful hill station. Starting package: ₹6,000. Visit Ooty Lake, Botanical Garden and Doddabetta Peak.";
+
+    }
+
+    else if (text.includes("munnar")) {
+
+        reply = "Munnar is famous for tea gardens and mountains. Starting package: ₹7,000.";
+
+    }
+
+    else if (text.includes("goa")) {
+
+        reply = "Goa is famous for beaches and sunsets. Starting package: ₹9,000.";
+
+    }
+
+    else if (text.includes("coorg")) {
+
+        reply = "Coorg is famous for Abbey Falls, Raja's Seat and coffee plantations. Starting package: ₹6,500.";
+
+    }
+
+    else if (text.includes("hotel")) {
+
+        reply = "We offer Luxury Hotels ₹4,000, Standard Hotels ₹2,500 and Budget Hotels ₹1,500 per night.";
+
+    }
+
+    else if (text.includes("booking") || text.includes("book")) {
+
+        reply = "You can book your trip using our Plan Your Trip option. Please visit our booking page.";
+
+    }
+
+    else if (text.includes("price") || text.includes("package")) {
+
+        reply = "Our packages start from ₹6,000. Ooty ₹6,000, Munnar ₹7,000, Goa ₹9,000 and Coorg ₹6,500.";
+
+    }
+
+    else if (text.includes("attraction") || text.includes("places")) {
+
+        reply = "Popular attractions include Ooty Lake, Munnar Tea Gardens, Goa Beaches and Abbey Falls in Coorg.";
+
+    }
+
+    else if (text.includes("thank")) {
+
+        reply = "You're welcome! Have a wonderful journey with Travel World!";
+
+    }
+
+    else if (text.includes("contact")) {
+
+        reply = "You can contact us at travelworld@example.com.";
+
+    }
+
+    else {
+
+        reply = "Thank you for contacting Travel World! Please ask about Ooty, Munnar, Goa, Coorg, hotels, prices or booking.";
+
+    }
+
+    let botMessage = document.createElement("div");
+
+    botMessage.className = "message bot";
+
+    botMessage.textContent = reply;
+
+    chatMessages.appendChild(botMessage);
+
+    input.value = "";
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+}
+
+</script>
+
+</body>
+</html>
+
